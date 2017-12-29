@@ -3,7 +3,7 @@ const mjml2html = require('mjml').mjml2html;
 
 const templateCache = {};
 
-function sendmail({ to, subject, text, template, data, onError = () => {} }) {
+function sendmail({ to, bcc, replyTo, headers, subject, text, template, data, onError = () => {}}) {
   if (!sendmail.config.fromAddress) {
     throw new Error('mjml-utils sendmail missing fromAddress configuration');
   }
@@ -27,6 +27,9 @@ function sendmail({ to, subject, text, template, data, onError = () => {} }) {
         subject,
         text,
         to,
+        bcc,
+        replyTo,
+        headers,
       };
 
       sendmail.config.transport.sendMail(mailOptions, (error) => {
